@@ -1,7 +1,7 @@
 # iot-platform-v2api-samples(Update in progress)
-This repository contains samples that interacts with IBM Watson IoT Plaform using the platform API Version 2. Currently, there are samples for Java; information and instructions regarding the use of these samples can be found in their respective directories.
+This repository contains samples that interacts with IBM Watson IoT Platform using the platform API Version 2. Currently, there are samples for Java; information and instructions regarding the use of these samples can be found in their respective directories.
 
-The IoTF API supports the following functionality for applications:
+The WIoTP API supports the following functionality for applications:
 
 * View organization details.
 * Bulk device operations (list all, add, remove).
