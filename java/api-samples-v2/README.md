@@ -1,22 +1,17 @@
 Device Management Samples
 ============================================
 
-Following stand-alone samples present in this project demonstrates the device management capabilities in IBM Watson IoT Platform.
+Following stand-alone samples(present in this project) interacts with IBM Watson IoT Platform using the platform API Version 2 to demonstrate various capabilities of the API.
 
-* [SampleRasPiDMAgent](https://github.com/ibm-messaging/iot-device-samples/blob/master/java/device-management-sample/src/main/java/com/ibm/iotf/sample/devicemgmt/device/SampleRasPiDMAgent.java)- A sample agent code that shows how to perform various device management operations on Raspberry Pi.
-* [SampleRasPiManagedDevice](https://github.com/ibm-messaging/iot-device-samples/blob/master/java/device-management-sample/src/main/java/com/ibm/iotf/sample/devicemgmt/device/SampleRasPiManagedDevice.java) - A sample code that shows how one can perform both device operations and device management operations.
-* [SampleRasPiDMAgentWithCustomMqttAsyncClient](https://github.com/ibm-messaging/iot-device-samples/blob/master/java/device-management-sample/src/main/java/com/ibm/iotf/sample/devicemgmt/device/SampleRasPiDMAgentWithCustomMqttAsyncClient.java) - A sample agent code with custom MqttAsyncClient.
-* [SampleRasPiDMAgentWithCustomMqttClient](https://github.com/ibm-messaging/iot-device-samples/blob/master/java/device-management-sample/src/main/java/com/ibm/iotf/sample/devicemgmt/device/SampleRasPiDMAgentWithCustomMqttClient.java) - A sample agent code with custom MqttClient.
-* [ManagedDeviceWithLifetimeSample](https://github.com/ibm-messaging/iot-java/blob/master/samples/iotfdevicemanagement/src/com/ibm/iotf/sample/devicemgmt/device/ManagedDeviceWithLifetimeSample.java) - A sample that shows how to send regular manage request with lifetime specified.
-* [DeviceAttributesUpdateListenerSample](https://github.com/ibm-messaging/iot-device-samples/blob/master/java/device-management-sample/src/main/java/com/ibm/iotf/sample/devicemgmt/device/DeviceAttributesUpdateListenerSample.java) - A sample listener code that shows how to listen for a various device attribute changes.
+* [SampleBulkAPIOperations](https://github.com/ibm-messaging/iot-platform-apiv2-samples/tree/master/java/api-samples-v2/src/main/java/com/ibm/iotf/sample/client/application/api/SampleBulkAPIOperations.java) - Sample that showcases how to get, add or remove devices in bulk from Internet of Things Foundation.
+* [SampleDeviceTypeAPIOperations](https://github.com/ibm-messaging/iot-platform-apiv2-samples/tree/master/java/api-samples-v2/src/main/java/com/ibm/iotf/sample/client/application/api/SampleDeviceTypeAPIOperations.java) - Sample that showcases various Device Type API operations like list all, create, delete, view and update device types in Internet of Things Foundation.
+* [SampleDeviceAPIOperations](https://github.com/ibm-messaging/iot-platform-apiv2-samples/tree/master/java/api-samples-v2/src/main/java/com/ibm/iotf/sample/client/application/api/SampleDeviceAPIOperations.java) - A sample that showcases various Device operations like list, add, remove, view, update, view location and view management information of a device in Internet of Things Foundation.
+* [SampleDeviceDiagnosticsAPIOperations](https://github.com/ibm-messaging/iot-platform-apiv2-samples/tree/master/java/api-samples-v2/src/main/java/com/ibm/iotf/sample/client/application/api/SampleDeviceDiagnosticsAPIOperations.java) - A sample that showcases various Device Diagnostic operations like clear logs, retrieve logs, add log information, delete logs, get specific log, clear error codes, get device error codes and add an error code to Internet of Things Foundation.
+* [SampleHistorianAPIOperations](https://github.com/ibm-messaging/iot-platform-apiv2-samples/tree/master/java/api-samples-v2/src/main/java/com/ibm/iotf/sample/client/application/api/SampleHistorianAPIOperations.java) - A sample that showcases how to retrieve historical events from Internet of Things Foundation.
+* [SampleDeviceManagementAPIOperations](https://github.com/ibm-messaging/iot-platform-apiv2-samples/tree/master/java/api-samples-v2/src/main/java/com/ibm/iotf/sample/client/application/api/SampleDeviceManagementAPIOperations.java) - A sample that showcases various device management request operations that can be performed on Internet of Things Foundation.
+* [SampleUsageManagementAPIOperations](https://github.com/ibm-messaging/iot-platform-apiv2-samples/tree/master/java/api-samples-v2/src/main/java/com/ibm/iotf/sample/client/application/api/SampleUsageManagementAPIOperations.java) - A sample that showcases various Usage management operations that can be performed on Internet of Things Foundation..
 
 The samples are written using the [Java Client Library](https://github.com/ibm-messaging/iot-java) for IBM Watson IoT Platform that simplifies the interactions with the IBM Watson IoT Platform.
-
-----
-
-### Tutorial explaining the Sample
-
-Refer to [the recipe](https://developer.ibm.com/recipes/tutorials/connect-raspberry-pi-as-managed-device-to-ibm-iot-foundation/) that shows how to connect the Raspberry Pi device as managed device to IBM Watson Internet of Things Platform to perform various device management operations in step by step using this client library.
 
 ----
 
