@@ -70,7 +70,7 @@ This will download the Java Client library for Watson IoT Platform (Currently it
 
 **Note:** If there is an Error, try extracting the ibmwiotp.jar present in target/classes directory to the same location and run again. Remember the jar must be extracted in the same location. 
 
-* Observe that each sample interacts with IBM Watson IoT Platform using the ReST API and creates/modifies/retrieves/deletes the resources. One can observe the changes using the IoT Platform dashboard, for example, device creation can be viewed in the dashboard to see that the device is actually registered in the Platform.
+* Observe that the sample creates/modifies/retrieves/deletes one or more devices in Watson IoT Platform using the API. You can observe the changes using the IoT Platform dashboard, for example, device creation can be viewed in the dashboard to see that the device is actually registered in the Platform.
 
 ----
 
