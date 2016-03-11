@@ -1,4 +1,4 @@
-# iot-platform-v2api-samples(Update in progress)
+# iot-platform-v2api-samples
 This repository contains samples that interacts with IBM Watson IoT Platform using the platform API Version 2. Currently, there are samples for Java; information and instructions regarding the use of these samples can be found in their respective directories.
 
 The WIoTP API supports the following functionality for applications:
