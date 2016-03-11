@@ -15,6 +15,7 @@ package com.ibm.iotf.sample.client.application.api;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Properties;
 
@@ -76,6 +77,7 @@ public class SampleHistorianAPIOperations {
 	 * in the organization with the supplied query parameters.
 	 */
 	private void getAllHistoricalEventsWithSampleQueryParameter() {
+		System.out.println("Get all blink events from start date "+ new Date(1445420849839L));
 		// Get the historical events 
 		try {
 			ArrayList<NameValuePair> parameters = new ArrayList<NameValuePair>();
@@ -101,6 +103,7 @@ public class SampleHistorianAPIOperations {
 	 * list of query parameters,
 	 */
 	private void getAllHistoricalEventsByDeviceType() {
+		System.out.println("Get all blink events under device type "+ DEVICE_TYPE +" and summarize the datapoints cpu and mem ");
 		// Get the historical events 
 		try {
 			ArrayList<NameValuePair> parameters = new ArrayList<NameValuePair>();
@@ -123,6 +126,7 @@ public class SampleHistorianAPIOperations {
 	 * This sample retrieves events based on the device ID and with supplied query parameters.
 	 */
 	private void getAllHistoricalEventsByDeviceID() {
+		System.out.println("Get all blink events under device "+ DEVICE_ID +" of Type "+ DEVICE_TYPE +" and summarize the datapoints cpu and mem ");
 		// Get the historical events 
 		try {
 			ArrayList<NameValuePair> parameters = new ArrayList<NameValuePair>();

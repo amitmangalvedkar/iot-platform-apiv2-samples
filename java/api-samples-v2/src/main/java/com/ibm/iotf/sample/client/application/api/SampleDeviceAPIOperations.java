@@ -111,7 +111,8 @@ public class SampleDeviceAPIOperations {
 	
 		SampleDeviceAPIOperations sample = new SampleDeviceAPIOperations(PROPERTIES_FILE_NAME);
 
-		sample.deleteDevice();
+		// check whether devicetype is created already, otherwise create it
+		sample.addDeviceType();
 		sample.addDevice();
 		sample.getAllDevices();
 		sample.getDevice();
@@ -120,6 +121,26 @@ public class SampleDeviceAPIOperations {
 		sample.getDeviceLocation();
 		sample.updateDeviceLocation();
 		sample.getDeviceManagementInformation();
+		sample.deleteDevice();
+	}
+	
+	/**
+	 * This sample showcases how to Create a device type using the Java Client Library. 
+	 * @throws IoTFCReSTException
+	 */
+	private void addDeviceType() throws IoTFCReSTException {
+		try {
+			boolean status = this.apiClient.isDeviceTypeExist(DEVICE_TYPE);
+			if(status == false) {
+				System.out.println("Adding device Type --> "+DEVICE_TYPE);
+				this.apiClient.addDeviceType(DEVICE_TYPE, DEVICE_TYPE, null, null);
+			}
+			return;
+		} catch(IoTFCReSTException e) {
+			System.out.println("HttpCode :" + e.getHttpCode() +" ErrorMessage :: "+ e.getMessage());
+			// Print if there is a partial response
+			System.out.println(e.getResponse());
+		}
 	}
 
 	/**
@@ -128,6 +149,7 @@ public class SampleDeviceAPIOperations {
 	 */
 	private void deleteDevice() throws IoTFCReSTException {
 		try {
+			System.out.println("Deleting devices --> RasPi100 and "+DEVICE_ID);
 			boolean status = this.apiClient.deleteDevice(DEVICE_TYPE, "RasPi100");
 			System.out.println(status);
 			status = this.apiClient.deleteDevice(DEVICE_TYPE, DEVICE_ID);
@@ -145,18 +167,27 @@ public class SampleDeviceAPIOperations {
 	 * @throws IoTFCReSTException
 	 */
 	private void addDevice() throws IoTFCReSTException {
+		System.out.println("Adding device --> "+deviceToBeAdded);
+		JsonParser parser = new JsonParser();
 		try{
-			JsonParser parser = new JsonParser();
 			JsonElement input = parser.parse(deviceToBeAdded);
 			JsonObject response = this.apiClient.registerDevice(DEVICE_TYPE, input);
 			System.out.println(response);
+		} catch(IoTFCReSTException e) {
+			System.out.println("HttpCode :" + e.getHttpCode() +" ErrorMessage :: "+ e.getMessage());
+			// Print if there is a partial response
+			System.out.println(e.getResponse());
+		}
+		
+		try{
 			
 			// Lets add device with different API that accepts more args,
 			
 			JsonElement deviceInfo = parser.parse(deviceInfoToBeAdded);
 			JsonElement location = parser.parse(locationToBeAdded);
 			
-			response = this.apiClient.registerDevice(DEVICE_TYPE, DEVICE_ID, "Password", 
+			System.out.println("Adding device --> "+DEVICE_ID);
+			JsonObject response = this.apiClient.registerDevice(DEVICE_TYPE, DEVICE_ID, "Password", 
 					deviceInfo, location, null);
 			
 			System.out.println(response);
@@ -173,6 +204,7 @@ public class SampleDeviceAPIOperations {
 	 */
 	private void getDevice() throws IoTFCReSTException {
 		try {
+			System.out.println("get device --> "+DEVICE_ID);
 			JsonObject response = this.apiClient.getDevice(DEVICE_TYPE, DEVICE_ID);
 			System.out.println(response);
 		} catch(IoTFCReSTException e) {
@@ -188,6 +220,7 @@ public class SampleDeviceAPIOperations {
 	 */
 	private void getDeviceLocation() throws IoTFCReSTException {
 		try {
+			System.out.println("get device location of device --> "+DEVICE_ID);
 			JsonObject response = this.apiClient.getDeviceLocation(DEVICE_TYPE, DEVICE_ID);
 			System.out.println(response);
 		} catch(IoTFCReSTException e) {
@@ -202,6 +235,7 @@ public class SampleDeviceAPIOperations {
 	 * @throws IoTFCReSTException
 	 */
 	private void updateDeviceLocation() throws IoTFCReSTException {
+		System.out.println("update device location of device --> "+DEVICE_ID);
 		try {
 			JsonElement newLocation = new JsonParser().parse(newlocationToBeAdded);
 			JsonObject response = this.apiClient.updateDeviceLocation(DEVICE_TYPE, DEVICE_ID, newLocation);
@@ -218,6 +252,7 @@ public class SampleDeviceAPIOperations {
 	 * @throws IoTFCReSTException
 	 */
 	private void getDeviceManagementInformation() throws IoTFCReSTException {
+		System.out.println("get device management information of device --> "+DEVICE_ID);
 		try {
 			JsonObject response = this.apiClient.getDeviceManagementInformation(DEVICE_TYPE, DEVICE_ID);
 			System.out.println(response);
@@ -234,6 +269,7 @@ public class SampleDeviceAPIOperations {
 	 */
 	private void updateDevice() throws IoTFCReSTException {
 		try {
+			System.out.println("update device --> "+DEVICE_ID);
 			JsonObject metadata = new JsonObject();
 			metadata.addProperty("Hi", "Hello, I'm updated metadata");
 		
@@ -253,6 +289,7 @@ public class SampleDeviceAPIOperations {
 	 * @throws IoTFCReSTException
 	 */
 	private void getAllDevices() throws IoTFCReSTException {
+		System.out.println("Get all devices of device type--> "+DEVICE_TYPE);
 		// Get all the devices of type SampleDT
 		try {
 			/**

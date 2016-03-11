@@ -61,6 +61,8 @@ public class SampleDeviceTypeAPIOperations {
 	
 	private APIClient apiClient = null;
 	
+	private final static String DEVICE_TYPE = "SampleDT";
+	
 	SampleDeviceTypeAPIOperations(String filePath) {
 		
 		/**
@@ -98,8 +100,9 @@ public class SampleDeviceTypeAPIOperations {
 	 * @throws IoTFCReSTException
 	 */
 	private void deleteDeviceType() throws IoTFCReSTException {
+		System.out.println("Delete a device type "+DEVICE_TYPE);
 		try {
-			boolean status = this.apiClient.deleteDeviceType("SampleDT");
+			boolean status = this.apiClient.deleteDeviceType(DEVICE_TYPE);
 			System.out.println(status);
 		} catch(IoTFCReSTException e) {
 			System.out.println("HttpCode :" + e.getHttpCode() +" ErrorMessage :: "+ e.getMessage());
@@ -113,6 +116,7 @@ public class SampleDeviceTypeAPIOperations {
 	 * @throws IoTFCReSTException
 	 */
 	private void addDeviceType() throws IoTFCReSTException {
+		System.out.println("Add a device type "+DEVICE_TYPE);
 		try {
 			JsonElement type = new JsonParser().parse(deviceTypeToBeAdded);
 			JsonObject response = this.apiClient.addDeviceType(type);
@@ -130,11 +134,12 @@ public class SampleDeviceTypeAPIOperations {
 	 */
 	private void addDeviceTypeWithMoreParameters() throws IoTFCReSTException {
 		try {
+			System.out.println("Add a device type "+DEVICE_TYPE);
 			JsonParser parser = new JsonParser();
 			JsonElement deviceInfo = parser.parse(deviceInfoToBeAdded);
 			JsonElement metadata = parser.parse(metaDataToBeAdded);
 			
-			JsonObject response = this.apiClient.addDeviceType("SampleDT", 
+			JsonObject response = this.apiClient.addDeviceType(DEVICE_TYPE, 
 					"sample description", deviceInfo, metadata);
 			
 			System.out.println(response);
@@ -151,7 +156,8 @@ public class SampleDeviceTypeAPIOperations {
 	 */
 	private void getDeviceType() throws IoTFCReSTException {
 		try {
-			JsonObject response = this.apiClient.getDeviceType("SampleDT");
+			System.out.println("Get a device type "+DEVICE_TYPE);
+			JsonObject response = this.apiClient.getDeviceType(DEVICE_TYPE);
 			System.out.println(response);
 		}  catch(IoTFCReSTException e) {
 			System.out.println("HttpCode :" + e.getHttpCode() +" ErrorMessage :: "+ e.getMessage());
@@ -165,10 +171,11 @@ public class SampleDeviceTypeAPIOperations {
 	 * @throws IoTFCReSTException
 	 */
 	private void updateDeviceType() throws IoTFCReSTException {
+		System.out.println("Update a device type "+DEVICE_TYPE);
 		try {
 			JsonObject json = new JsonObject();
 			json.addProperty("description", "Hello, I'm updated description");
-			JsonObject response = this.apiClient.updateDeviceType("SampleDT", json);
+			JsonObject response = this.apiClient.updateDeviceType(DEVICE_TYPE, json);
 			System.out.println(response);
 		}  catch(IoTFCReSTException e) {
 			System.out.println("HttpCode :" + e.getHttpCode() +" ErrorMessage :: "+ e.getMessage());
@@ -182,6 +189,7 @@ public class SampleDeviceTypeAPIOperations {
 	 * @throws IoTFCReSTException
 	 */
 	private void getAllDeviceTypes() throws IoTFCReSTException {
+		System.out.println("Get all device types present in the Organization");
 		// Get all the devices in the organization
 		/**
 		 * The Java ibmiotf client library provides an one argument constructor

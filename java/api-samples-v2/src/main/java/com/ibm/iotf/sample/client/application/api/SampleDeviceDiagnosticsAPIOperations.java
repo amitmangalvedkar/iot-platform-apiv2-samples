@@ -87,6 +87,9 @@ public class SampleDeviceDiagnosticsAPIOperations {
 		// Make sure that we have device added to the IBM Watson IoT Platform already
 		SampleDeviceDiagnosticsAPIOperations sample = new SampleDeviceDiagnosticsAPIOperations(PROPERTIES_FILE_NAME);
 		
+		// add device if its not present already
+		sample.addDevice();
+		
 		sample.addDiagnosticLog();
 		sample.getAllDiagnosticLogs();
 		sample.getDiagnosticLog();
@@ -100,12 +103,37 @@ public class SampleDeviceDiagnosticsAPIOperations {
 		sample.getDeviceConnectionLogs();
 
 	}
+	
+	/**
+	 * This method adds a device & device type if its not added already 
+	 * @throws IoTFCReSTException
+	 */
+	private void addDevice() throws IoTFCReSTException {
+		try {
+			boolean status = this.apiClient.isDeviceTypeExist(DEVICE_TYPE);
+			if(status == false) {
+				System.out.println("Adding device Type --> "+DEVICE_TYPE);
+				this.apiClient.addDeviceType(DEVICE_TYPE, DEVICE_TYPE, null, null);
+				System.out.println("Adding device "+DEVICE_ID+" under type "+DEVICE_TYPE);
+				this.apiClient.registerDevice(DEVICE_TYPE, DEVICE_ID, "password", null, null, null);
+			} else if (!apiClient.isDeviceExist(DEVICE_TYPE, DEVICE_ID)) {
+				System.out.println("Adding device "+DEVICE_ID+" under type "+DEVICE_TYPE);
+				this.apiClient.registerDevice(DEVICE_TYPE, DEVICE_ID, "password", null, null, null);
+			}
+			return;
+		} catch(IoTFCReSTException e) {
+			System.out.println("HttpCode :" + e.getHttpCode() +" ErrorMessage :: "+ e.getMessage());
+			// Print if there is a partial response
+			System.out.println(e.getResponse());
+		}
+	}
 
 	/**
 	 * This sample showcases how to Delete a diagnostic Log.
 	 * @throws IoTFCReSTException
 	 */
 	private void deleteDiagnosticLog() {
+		System.out.println("Delete a Diag Log for device "+DEVICE_ID + " of type "+DEVICE_TYPE);
 		// Lets get all diagnostic Logs and delete the first one
 		try {
 			JsonArray response = this.apiClient.getAllDiagnosticLogs(DEVICE_TYPE, DEVICE_ID);
@@ -132,6 +160,7 @@ public class SampleDeviceDiagnosticsAPIOperations {
 			JsonArray response = this.apiClient.getAllDiagnosticLogs(DEVICE_TYPE, DEVICE_ID);
 			JsonElement logElement = response.get(0);
 			JsonObject responseJson = logElement.getAsJsonObject();
+			System.out.println("Get a Diag Log based on Id "+responseJson.get("id").getAsString());
 			JsonObject log = apiClient.getDiagnosticLog(DEVICE_TYPE, DEVICE_ID, responseJson.get("id").getAsString());
 			System.out.println(log);
 		} catch(IoTFCReSTException e) {
@@ -147,6 +176,7 @@ public class SampleDeviceDiagnosticsAPIOperations {
 	 */
 
 	private void clearDiagnosticLogs() {
+		System.out.println("Clear all Diag Log of device "+DEVICE_ID + " of type "+DEVICE_TYPE);
 		try {
 			boolean status = this.apiClient.clearAllDiagnosticLogs(DEVICE_TYPE, DEVICE_ID);
 			System.out.println(status);
@@ -162,6 +192,7 @@ public class SampleDeviceDiagnosticsAPIOperations {
 	 * @throws IoTFCReSTException
 	 */
 	private void addDiagnosticLog() {
+		System.out.println("Add diag Log for device --> "+DEVICE_ID + " of type "+DEVICE_TYPE);
 		try {
 			JsonParser parser = new JsonParser();
 			JsonElement log = parser.parse(logToBeAdded);
@@ -179,6 +210,7 @@ public class SampleDeviceDiagnosticsAPIOperations {
 	 * @throws IoTFCReSTException
 	 */
 	private void getAllDiagnosticLogs() {
+		System.out.println("Get all diag Log of device --> "+DEVICE_ID + " of type "+DEVICE_TYPE);
 		// Get all the diagnostics logs of device DEVICE_ID
 		try {
 			JsonArray response = this.apiClient.getAllDiagnosticLogs(DEVICE_TYPE, DEVICE_ID);
@@ -201,6 +233,7 @@ public class SampleDeviceDiagnosticsAPIOperations {
 	 * @throws IoTFCReSTException
 	 */
 	private void clearDiagnosticErrorCodes() {
+		System.out.println("Clear all diag Log of device --> "+DEVICE_ID + " of type "+DEVICE_TYPE);
 		try {
 			boolean status = this.apiClient.clearAllDiagnosticErrorCodes(DEVICE_TYPE, DEVICE_ID);
 			System.out.println(status);
@@ -216,6 +249,7 @@ public class SampleDeviceDiagnosticsAPIOperations {
 	 * @throws IoTFCReSTException
 	 */
 	private void getAllDiagnosticErrorCodes() {
+		System.out.println("Get all diag Errorcodes of device --> "+DEVICE_ID + " of type "+DEVICE_TYPE);
 		// Get all the diagnostics ErrorCodes of device DEVICE_ID
 		try {
 			JsonArray response = this.apiClient.getAllDiagnosticErrorCodes(DEVICE_TYPE, DEVICE_ID);
@@ -239,6 +273,7 @@ public class SampleDeviceDiagnosticsAPIOperations {
 	 * 2. providing properties in raw format
 	 */
 	private void addDiagnosticErrorCode() {
+		System.out.println("Add an Errorcode for device --> "+DEVICE_ID + " of type "+DEVICE_TYPE);
 		try {
 			JsonParser parser = new JsonParser();
 			JsonElement errorcode = parser.parse(errorcodeToBeAdded);
@@ -257,6 +292,7 @@ public class SampleDeviceDiagnosticsAPIOperations {
 	 * This sample showcases how to get connection logs which is not related to the Diagnostic Log.
 	 */
 	private void getDeviceConnectionLogs() {
+		System.out.println("Get device connection logs for device --> "+DEVICE_ID + " of type "+DEVICE_TYPE);
 		// Get the connection logs of device DEVICE_ID
 		try {
 			JsonArray response = this.apiClient.getDeviceConnectionLogs(DEVICE_TYPE, DEVICE_ID);

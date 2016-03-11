@@ -48,10 +48,11 @@ public class SampleDeviceManagementAPIOperations {
  	 *	]
 	 * }
 	 */
-	
+	private static final String DEVICE_TYPE = "SampleDT";
+	private static final String DEVICE_ID = "RasPi100";
 	private static final String rebootRequestToBeInitiated = "{\"action\": \"device/reboot\","
-			+ "\"devices\": [ {\"typeId\": \"SampleDT\","
-			+ "\"deviceId\": \"RasPi100\"}]}";
+			+ "\"devices\": [ {\"typeId\": \"" + DEVICE_TYPE +"\","
+			+ "\"deviceId\": \"" + DEVICE_ID + "\"}]}";
 
 	private APIClient apiClient = null;
 	
@@ -79,6 +80,9 @@ public class SampleDeviceManagementAPIOperations {
 	
 	public static void main(String[] args) throws IoTFCReSTException {
 		SampleDeviceManagementAPIOperations sample = new SampleDeviceManagementAPIOperations(PROPERTIES_FILE_NAME);
+		
+		//add if device/type is not present in the Organization
+		sample.addDevice();
 		sample.initiateMgmtRequest();
 		sample.getAllMgmtRequests();
 		sample.initiateMgmtRequest();
@@ -86,12 +90,37 @@ public class SampleDeviceManagementAPIOperations {
 		sample.getMgmtRequest();
 		sample.getMgmtRequestDeviceStatus();
 	}
+	
+	/**
+	 * This method adds a device & device type if its not added already 
+	 * @throws IoTFCReSTException
+	 */
+	private void addDevice() throws IoTFCReSTException {
+		try {
+			boolean status = this.apiClient.isDeviceTypeExist(DEVICE_TYPE);
+			if(status == false) {
+				System.out.println("Adding device Type --> "+DEVICE_TYPE);
+				this.apiClient.addDeviceType(DEVICE_TYPE, DEVICE_TYPE, null, null);
+				System.out.println("Adding device "+DEVICE_ID+" under type "+DEVICE_TYPE);
+				this.apiClient.registerDevice(DEVICE_TYPE, DEVICE_ID, "password", null, null, null);
+			} else if (!apiClient.isDeviceExist(DEVICE_TYPE, DEVICE_ID)) {
+				System.out.println("Adding device "+DEVICE_ID+" under type "+DEVICE_TYPE);
+				this.apiClient.registerDevice(DEVICE_TYPE, DEVICE_ID, "password", null, null, null);
+			}
+			return;
+		} catch(IoTFCReSTException e) {
+			System.out.println("HttpCode :" + e.getHttpCode() +" ErrorMessage :: "+ e.getMessage());
+			// Print if there is a partial response
+			System.out.println(e.getResponse());
+		}
+	}
 
 	/**
 	 * This sample showcases how to get a list of device management requests, which can be in progress or recently completed.
 	 * @throws IoTFCReSTException
 	 */
 	private void getAllMgmtRequests() throws IoTFCReSTException {
+		System.out.println("Retrieve all DM requests from the organization..");
 		try {
 			JsonElement response = this.apiClient.getAllDeviceManagementRequests();
 			JsonArray requests = response.getAsJsonObject().get("results").getAsJsonArray();
@@ -113,6 +142,7 @@ public class SampleDeviceManagementAPIOperations {
 	 * @throws IoTFCReSTException
 	 */
 	private void initiateMgmtRequest() throws IoTFCReSTException {
+		System.out.println("Initiate reboot request .. "+rebootRequestToBeInitiated);
 		try {
 			JsonObject reboot = (JsonObject) new JsonParser().parse(rebootRequestToBeInitiated);
 			boolean response = this.apiClient.initiateDeviceManagementRequest(reboot);
@@ -134,11 +164,13 @@ public class SampleDeviceManagementAPIOperations {
 	 * @throws IoTFCReSTException
 	 */
 	private void deleteMgmtRequest() throws IoTFCReSTException {
+		System.out.println("Delete a DM request from the organization..");
 		// Lets clear the first ID from the list
 		try {
 			JsonElement response = this.apiClient.getAllDeviceManagementRequests();
 			JsonArray requests = response.getAsJsonObject().get("results").getAsJsonArray();
 			JsonElement request = requests.get(0);
+			System.out.println("Delete a DM request .. "+request.getAsJsonObject().get("id").getAsString());
 			boolean status = this.apiClient.deleteDeviceManagementRequest(request.getAsJsonObject().get("id").getAsString());
 			System.out.println("Delete status: "+status);
 		} catch(IoTFCReSTException e) {
@@ -154,11 +186,13 @@ public class SampleDeviceManagementAPIOperations {
 	 * @throws IoTFCReSTException
 	 */
 	private void getMgmtRequest() throws IoTFCReSTException {
+		System.out.println("Retrieve a DM request from the organization..");
 		// Lets clear the first ID from the list
 		try {
 			JsonElement response = this.apiClient.getAllDeviceManagementRequests();
 			JsonArray requests = response.getAsJsonObject().get("results").getAsJsonArray();
 			JsonElement request = requests.get(0);
+			System.out.println("Get a DM request .. "+request.getAsJsonObject().get("id").getAsString());
 			JsonObject details = this.apiClient.getDeviceManagementRequest(request.getAsJsonObject().get("id").getAsString());
 			System.out.println(details);
 		} catch(IoTFCReSTException e) {
@@ -174,7 +208,8 @@ public class SampleDeviceManagementAPIOperations {
 	 * @throws IoTFCReSTException
 	 */
 	private void getMgmtRequestDeviceStatus() throws IoTFCReSTException {
-		// Lets clear the first ID from the list
+		// Lets get the DM request status from the list
+		System.out.println("Get DM request device status..");
 		try {
 			JsonElement response = this.apiClient.getAllDeviceManagementRequests();
 			JsonArray requests = response.getAsJsonObject().get("results").getAsJsonArray();

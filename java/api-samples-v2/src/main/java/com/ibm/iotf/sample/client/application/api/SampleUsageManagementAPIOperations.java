@@ -83,7 +83,8 @@ public class SampleUsageManagementAPIOperations {
 	private void getActiveDevices() throws IoTFCReSTException {
 		try {
 			String start = "2015-09-01";
-			String end = "2015-10-01";
+			String end = "2016-10-01";
+			System.out.println("Get all active devices between date "+start + " end "+end);
 			JsonElement response = this.apiClient.getActiveDevices(start, end, true);
 			System.out.println(response);
 		} catch(IoTFCReSTException e) {
@@ -110,7 +111,8 @@ public class SampleUsageManagementAPIOperations {
 	private void getHistoricalDataUsage() throws IoTFCReSTException {
 		try {
 			String start = "2015-09-01";
-			String end = "2015-10-01";
+			String end = "2016-10-01";
+			System.out.println("Get Historical data usage between date "+start + " end "+end);
 			JsonElement response = this.apiClient.getHistoricalDataUsage(start, end, false);
 			System.out.println(response);
 		} catch(IoTFCReSTException e) {
@@ -136,7 +138,8 @@ public class SampleUsageManagementAPIOperations {
 	private void getDataTraffic() throws IoTFCReSTException {
 		try {
 			String start = "2015-09-01";
-			String end = "2015-10-01";
+			String end = "2018-10-01";
+			System.out.println("Get data traffic between date "+start + " end "+end);
 			JsonElement response = this.apiClient.getDataTraffic(start, end, false);
 			System.out.println(response);
 		} catch(IoTFCReSTException e) {
@@ -154,6 +157,7 @@ public class SampleUsageManagementAPIOperations {
 	 */
 	private void getServiceStatus() throws IoTFCReSTException {
 		try {
+			System.out.println("Get Service status..");
 			JsonElement response = this.apiClient.getServiceStatus();
 			System.out.println(response);
 		} catch(IoTFCReSTException e) {

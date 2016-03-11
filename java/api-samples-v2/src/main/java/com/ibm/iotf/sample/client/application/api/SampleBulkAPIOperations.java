@@ -116,6 +116,7 @@ public class SampleBulkAPIOperations {
 	 * @throws Exception 
 	 */
 	private void deleteDevices() throws IoTFCReSTException {
+		System.out.println("Deleting couple of devices");
 		JsonElement device1 = new JsonParser().parse(deviceToBeDeleted1);
 		JsonElement device2 = new JsonParser().parse(deviceToBeDeleted2);
 		JsonArray arryOfDevicesToBeDeleted = new JsonArray();
@@ -141,6 +142,7 @@ public class SampleBulkAPIOperations {
 	 * @throws Exception
 	 */
 	private void addDevices() throws IoTFCReSTException {
+		System.out.println("Adding couple of devices");
 		JsonElement input = new JsonParser().parse(deviceToBeAdded);
 		JsonArray arryOfDevicesToBeAdded = new JsonArray();
 		arryOfDevicesToBeAdded.add(input);
@@ -164,6 +166,7 @@ public class SampleBulkAPIOperations {
 	 * @throws Exception
 	 */
 	private void getAllDevices() throws IoTFCReSTException {
+		System.out.println("Retrieve all devices in the Organization..");
 		// Get all the devices in the organization
 		/**
 		 * The Java ibmiotf client library provides an one argument constructor
@@ -192,6 +195,7 @@ public class SampleBulkAPIOperations {
 	 * @throws Exception
 	 */
 	private void getOrganizationDetails() throws IoTFCReSTException {
+		System.out.println("Retrieve Organization details...");
 		// Get the organization detail
 		JsonObject orgDetail = this.apiClient.getOrganizationDetails();
 		System.out.println(orgDetail);
