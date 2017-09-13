@@ -1,7 +1,7 @@
 /**
  *****************************************************************************
  * Copyright (c) 2017 IBM Corporation and other Contributors.
- 
+
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -39,32 +39,30 @@ import com.ibm.iotf.client.app.StatusCallback;
 import com.ibm.iotf.client.device.DeviceClient;
 
 public class SampleDataManagementAPIOperations {
-	
+
 	private final static String APPLICATION_PROPERTIES_FILE = "/application.properties";
-	private final static String EVENT_SCHEMA1 = "/Users/amitmangalvedkar/Documents/workspace/mars/watsoniot/testlibraries/"
-			+ "iot-sample-java/src/main/resources/tempEventSchema.json";
+	private final static String EVENT_SCHEMA1 = "/tempEventSchema.json";
 	private final static String SCHEMA_NAME1 = "fahrenhietSchema";
 	private final static String SCHEMA_DESCRIPTION1 = "Schema to capture the temperature readings in Fahrenhiet";
 	private final static String SCHEMA_TYPE1 = "json-schema";
-	
-	private final static String EVENT_SCHEMA2 = "/Users/amitmangalvedkar/Documents/workspace/mars/watsoniot/testlibraries/"
-			+ "iot-sample-java/src/main/resources/envSensor.json";
+
+	private final static String EVENT_SCHEMA2 = "/envSensor.json";
 	private final static String SCHEMA_NAME2 = "celciusSchema";
 	private final static String SCHEMA_DESCRIPTION2 = "Schema to capture the temperature readings in Celcius";
 	private final static String SCHEMA_TYPE2 = "json-schema";
-	
+
 	private static String EVT_TOPIC = "tempEvent";
 	private static String TYPE_ID = "deviceType";
-	private static String API_KEY = "a-l3l6wt-kot6eomffc";	
+	private static String API_KEY = "<Your API Key>";
 
 	//private final static String VALIDATE_CONFIGURATION = SchemaOperation.VALIDATE;
 	//private final static String ACTIVATE_CONFIGURATION = "activate-configuration";
 	//private final static String DEACTIVATE_CONFIGURATION = "deactivate-configuration";
-	
+
 	private final static String NOTIFICATION_STRATEGY = "on-state-change"; // on-every-event
-	
+
 	private APIClient myClient = null;
-	
+
 	public static void main(String[] args) {
 
 		Properties props = new Properties();
@@ -73,12 +71,12 @@ public class SampleDataManagementAPIOperations {
 		} catch (IOException e1) {
 			System.err.println("Not able to read the properties file, exiting..");
 			return;
-		} 
+		}
 //		SystemObject object = new SystemObject();
-			
+
 		APIClient myClient = null;
 
-		
+
 		try {
 			//Instantiate the class by passing the properties file
 			myClient = new APIClient(props);
@@ -87,17 +85,17 @@ public class SampleDataManagementAPIOperations {
 			// Looks like the properties file is not updated, just ignore;
 			return;
 		}
-		
+
 		try {
-			
+
 			//Create Schema Resource for Draft Physical Interface
-			JsonObject draftPhysicalSchemaResponse = myClient.addDraftSchemaDefinition(new File(EVENT_SCHEMA1), SCHEMA_NAME1, SCHEMA_DESCRIPTION1, SCHEMA_TYPE1);			
+			JsonObject draftPhysicalSchemaResponse = myClient.addDraftSchemaDefinition(new File(EVENT_SCHEMA1), SCHEMA_NAME1, SCHEMA_DESCRIPTION1, SCHEMA_TYPE1);
 			JsonElement draftSchemaId = draftPhysicalSchemaResponse.get("id");
 			System.out.println("Creating artifacts");
 			System.out.println("1. Schema for Draft Physical Interface created with id = " + draftSchemaId.getAsString());
 			System.out.println("Schema Object = " + draftPhysicalSchemaResponse.toString());
-			
-			
+
+
 			//Create Event Type
 			JsonObject draftEventTypeRequest = new JsonObject();
 			draftEventTypeRequest.add("schemaId", draftSchemaId);
@@ -106,16 +104,16 @@ public class SampleDataManagementAPIOperations {
 			JsonElement draftEventTypeId = draftEventTypeResponse.get("id");
 			System.out.println("\n2. Event Type created with id = " + draftEventTypeId.getAsString());
 			System.out.println("Event Type Object = " + draftEventTypeResponse);
-			
-			
+
+
 			//Create Draft Physical Interface
 			JsonObject draftPhysicalInterfaceRequest = new JsonObject();
 			draftPhysicalInterfaceRequest.addProperty("name", "Env sensor physical interface 7");
 			JsonObject draftPhysicalInterfaceResponse = myClient.addDraftPhysicalInterface(draftPhysicalInterfaceRequest.toString());
 			System.out.println("\n3. Draft Physical Interface created with id = " + draftPhysicalInterfaceResponse.get("id").getAsString());
 			System.out.println("Draft Physical Interface Object = " + draftPhysicalInterfaceResponse.toString());
-			
-			
+
+
 			//Add Event to Physical Interface
 			JsonObject eventTypeToPIRequest = new JsonObject();
 			eventTypeToPIRequest.addProperty("eventId", EVT_TOPIC);
@@ -124,8 +122,8 @@ public class SampleDataManagementAPIOperations {
 					getAsString(), eventTypeToPIRequest.toString());
 			System.out.println("\n4. Event Type to Draft Physical Interface added with eventTypeId = " + eventTypeToPIResponse.get("eventTypeId").getAsString());
 			System.out.println("Event Type to Physical Interface = " + eventTypeToPIResponse.toString());
-			
-			
+
+
 			//Update Draft Device Type to connect the Draft Physical Interface
 			JsonObject updateDraftDTToPIRequest = new JsonObject();
 			JsonObject refs = new JsonObject();
@@ -143,15 +141,15 @@ public class SampleDataManagementAPIOperations {
 			JsonObject updateDraftDTToPIResponse = myClient.associateDraftPhysicalInterfaceWithDeviceType(TYPE_ID, updateDraftDTToPIRequest.toString());
 			System.out.println("\n5. Draft Device Type added to draft Physical Interface with id = " + updateDraftDTToPIResponse.get("id").getAsString());
 			System.out.println("Draft Device Type to draft Physical Interface = " + updateDraftDTToPIResponse.toString());
-			
-			
+
+
 			//Create schema for draft logical interface
-			JsonObject draftLogicalSchemaResponse = myClient.addDraftSchemaDefinition(new File(EVENT_SCHEMA2), SCHEMA_NAME2, SCHEMA_DESCRIPTION2, SCHEMA_TYPE2);			
+			JsonObject draftLogicalSchemaResponse = myClient.addDraftSchemaDefinition(new File(EVENT_SCHEMA2), SCHEMA_NAME2, SCHEMA_DESCRIPTION2, SCHEMA_TYPE2);
 			JsonElement draftLogicalSchemaId = draftLogicalSchemaResponse.get("id");
 			System.out.println("\n6. Schema for Draft Logical Interface created with Id = " + draftLogicalSchemaId.getAsString());
 			System.out.println("Schema for Draft Logical Interface Object = " + draftLogicalSchemaResponse.toString());
-			
-			
+
+
 			//Create Draft Logical Interface
 			JsonObject draftLogicalInterfaceRequest = new JsonObject();
 			draftLogicalInterfaceRequest.addProperty("name", "environment sensor interface");
@@ -160,8 +158,8 @@ public class SampleDataManagementAPIOperations {
 			System.out.println("\n7. Draft Logical Interface created with Id = " + draftLogicalInterfaceResponse.get("id").
 					getAsString() + " and schemaId = " + draftLogicalInterfaceResponse.get("schemaId").getAsString());
 			System.out.println("Draft for Logical Interface Object = " + draftLogicalInterfaceResponse.toString());
-			
-			
+
+
 			//Add Draft Logical Interface to Device Type
 			JsonObject draftLIToDTRequest = new JsonObject();
 			refs = new JsonObject();
@@ -179,8 +177,8 @@ public class SampleDataManagementAPIOperations {
 			JsonObject draftLIToDTResponse = myClient.associateDraftLogicalInterfaceToDeviceType(TYPE_ID, draftLIToDTRequest.toString());
 			System.out.println("\n8. Draft Logical Interface added to device Type with id = " + draftLIToDTResponse.get("id").getAsString());
 			System.out.println("Draft Logical Interface to Device Type Object = " + draftLIToDTResponse.toString());
-			
-			
+
+
 			//Create mapping between Device Type and Logical Interface
 			JsonObject mappings = new JsonObject();
 			mappings.addProperty("logicalInterfaceId", draftLIToDTResponse.get("id").getAsString());
@@ -195,8 +193,8 @@ public class SampleDataManagementAPIOperations {
 			System.out.println("\n9. Mapping created between device type and Logical Interface with Id = " + deviceToLImappings.
 					get("logicalInterfaceId").getAsString());
 			System.out.println("Mapping between device type and logical interface = " + deviceToLImappings.toString());
-			
-			
+
+
 			//Validating configuration
 			JsonObject validateOperation = new JsonObject();
 			validateOperation.addProperty("operation", SchemaOperation.VALIDATE.getOperation());
@@ -216,60 +214,60 @@ public class SampleDataManagementAPIOperations {
 				System.out.println("\n11. Activate operation = " + activated.toString());
 			}
 			Thread.sleep(20000);
-			
+
 			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 			Thread.sleep(5000);
 			System.out.println("\n\nType quit to delete the artifacts created......");
 
 			String deleteEverything = br.readLine();
 			if(deleteEverything.equals("quit")) {
-			
+
 				System.out.println("Deleting artifacts");
-				
-				
-				System.out.println("\n12. Dissociating the device type from Physical Interface = " + TYPE_ID + " = " + 
+
+
+				System.out.println("\n12. Dissociating the device type from Physical Interface = " + TYPE_ID + " = " +
 						myClient.dissociateDraftPhysicalInterfaceFromDeviceType(TYPE_ID));
-				
-				
-				System.out.println("\n13. Mappings between device type and LogicalInterface deleted = " + 
+
+
+				System.out.println("\n13. Mappings between device type and LogicalInterface deleted = " +
 						myClient.deleteDraftPropertyMappings(TYPE_ID, deviceToLImappings.get("logicalInterfaceId").getAsString()));
-	
-				
-				System.out.println("\n14. Dissociating the device type from Logical Interface = " + TYPE_ID + " = " + 
+
+
+				System.out.println("\n14. Dissociating the device type from Logical Interface = " + TYPE_ID + " = " +
 						myClient.dissociateDraftLogicalInterfaceFromDeviceType(TYPE_ID, draftLIToDTResponse.get("id").getAsString()));
-	
-				
-				System.out.println("\n15. Mapping between Event = " + EVT_TOPIC + " and Physical Interface = " + 
-						draftPhysicalInterfaceResponse.get("id").getAsString() + " deleted = " + 
+
+
+				System.out.println("\n15. Mapping between Event = " + EVT_TOPIC + " and Physical Interface = " +
+						draftPhysicalInterfaceResponse.get("id").getAsString() + " deleted = " +
 						myClient.deleteEventMappingFromPhysicalInterface(draftPhysicalInterfaceResponse.get("id").getAsString(), EVT_TOPIC));
 
-				
+
 				JsonObject deactivateOperation = new JsonObject();
 				deactivateOperation.addProperty("operation", SchemaOperation.DEACTIVATE.getOperation());
 				System.out.println("id" + draftLogicalInterfaceResponse.get("id").getAsString() + " deactivateOperation.toString()" + deactivateOperation.toString() );
 
 				JsonObject deactivated = myClient.performOperationAgainstLogicalInterface(draftLogicalInterfaceResponse.get("id").getAsString(), deactivateOperation.toString());
 				System.out.println("\n16. Dectivate operation = " + deactivated.toString());
-				
-				System.out.println("\n17. Draft Physical Interface with Id = " + draftPhysicalInterfaceResponse.get("id").getAsString() + " deleted = " + 
+
+				System.out.println("\n17. Draft Physical Interface with Id = " + draftPhysicalInterfaceResponse.get("id").getAsString() + " deleted = " +
 						myClient.deleteDraftPhysicalInterface(draftPhysicalInterfaceResponse.get("id").getAsString()));
-				
-				
-				System.out.println("\n18. Draft Event Type with Id = " + draftEventTypeId.toString() + " deleted = " + 
+
+
+				System.out.println("\n18. Draft Event Type with Id = " + draftEventTypeId.toString() + " deleted = " +
 						myClient.deleteDraftEventType(draftEventTypeId.getAsString()));
-				
-				
-				System.out.println("\n19. Physical Schema with Id = " + draftSchemaId.toString() + " deleted = " + 
+
+
+				System.out.println("\n19. Physical Schema with Id = " + draftSchemaId.toString() + " deleted = " +
 						myClient.deleteDraftSchemaDefinition(draftSchemaId.getAsString()));
-	
-				
-				System.out.println("\n20. Draft Logical Interface with Id = " + draftLogicalInterfaceResponse.get("id").getAsString() + " deleted = " + 
+
+
+				System.out.println("\n20. Draft Logical Interface with Id = " + draftLogicalInterfaceResponse.get("id").getAsString() + " deleted = " +
 						myClient.deleteDraftLogicalInterface(draftLogicalInterfaceResponse.get("id").getAsString()));
-	
-				
-				System.out.println("\n21. Logical Schema with Id = " + draftLogicalSchemaId.toString() + " deleted = " + 
+
+
+				System.out.println("\n21. Logical Schema with Id = " + draftLogicalSchemaId.toString() + " deleted = " +
 						myClient.deleteDraftSchemaDefinition(draftLogicalSchemaId.getAsString()));
-			
+
 			}
 
 		} catch(Exception ioe) {
@@ -278,5 +276,5 @@ public class SampleDataManagementAPIOperations {
 
 	}
 
-	
+
 }
