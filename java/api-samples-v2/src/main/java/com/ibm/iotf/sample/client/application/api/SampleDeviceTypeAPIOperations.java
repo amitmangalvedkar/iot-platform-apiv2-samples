@@ -70,7 +70,7 @@ public class SampleDeviceTypeAPIOperations {
 		  */
 		Properties props = new Properties();
 		try {
-			props.load(SampleDeviceTypeAPIOperations.class.getResourceAsStream(PROPERTIES_FILE_NAME));
+			props.load(SampleDeviceTypeAPIOperations.class.getResourceAsStream(filePath));
 		} catch (IOException e1) {
 			System.err.println("Not able to read the properties file, exiting..");
 			System.exit(-1);
