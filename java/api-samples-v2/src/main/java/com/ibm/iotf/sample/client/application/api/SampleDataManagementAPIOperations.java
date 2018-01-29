@@ -14,10 +14,8 @@
 
 package com.ibm.iotf.sample.client.application.api;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Properties;
 
 import com.google.gson.Gson;
@@ -197,13 +195,9 @@ public class SampleDataManagementAPIOperations {
 				JsonObject activated = myClient.performOperationAgainstDraftLogicalInterface(draftLogicalInterfaceResponse.get("id").getAsString(), activateOperation.toString());
 				System.out.println("\n11. Activate operation = " + activated.toString());
 			}
-			Thread.sleep(20000);
+			Thread.sleep(25000);
 			
-			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-			Thread.sleep(5000);
 			System.out.println("\n\nEnter anything to delete the artifacts created......");
-
-			String deleteEverything = br.readLine();
 
 			System.out.println("Deleting artifacts");
 			
