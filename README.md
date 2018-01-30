@@ -29,32 +29,6 @@ The WIoTP API supports the following functionality for applications:
 Refer to [the Swagger document](https://docs.internetofthings.ibmcloud.com/swagger/v0002.html#/) for more information about the list of API's.   
 
 
-Setup your development environment
-==================================
-This section explains how to set up your development environment to use the Watson IoT Platform Client Library for Java.
-
-Pre-requisites
---------------
-
-* [Java 8](https://java.com/en/download/)
-
-* [Maven 3](https://maven.apache.org/download.cgi)
-
-* [Watson IoT Client Library for Java](https://github.com/ibm-watson-iot/iot-java)
-
-* Optionally [Eclipse IDE](https://www.eclipse.org)
-
-* [Git](https://git-scm.com/downloads)
-
-Steps to run the example through Eclipse
-----------------------------------------
-1. Git clone this Repository  
-`git clone https://github.com/ibm-watson-iot/iot-platform-apiv2-samples`  
-
-2. Open your Eclipse IDE  
-
-3. Right click in `Enterprise Explorer` view in Eclipse and select New Maven Project and select the folder wherein you had git cloned the Repository   
-
-4. Right click on the imported Maven Project `ibmiot-apiv2-samples` and build the project   
-
-5. Modify the properties file, as per your organization, and run any of the source files  
+Building and Running the samples
+================================
+This repository contains the samples which can be executed either within Eclipse environment or outside. Check the following [link](java/api-samples-v2/README.md) which guides you in the same
