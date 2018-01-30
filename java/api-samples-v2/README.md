@@ -34,7 +34,7 @@ To build and run the sample, you must have the following installed:
 * [Git](https://git-scm.com/downloads)
 ----
 
-Build & Run the sample inside Eclipse
+Build & Run the samples inside Eclipse
 =====================================
 You must have installed the [Eclipse Maven plugin](http://www.eclipse.org/m2e/), to import & run the samples in eclipse. Go to the next step, if you want to run manually.
 
@@ -52,7 +52,7 @@ You must have installed the [Eclipse Maven plugin](http://www.eclipse.org/m2e/),
 
 ----
 
-Building the samples outside Eclipse
+Build & Run the samples outside Eclipse
 ====================================
 ### Building the sample
 
