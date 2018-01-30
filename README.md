@@ -34,6 +34,7 @@ Setup your development environment
 This section explains how to set up your development environment to use the Watson IoT Platform Client Library for Java.
 
 Pre-requisites
+--------------
 
 * [Java 8](https://java.com/en/download/)
 
@@ -45,8 +46,8 @@ Pre-requisites
 
 * [Git](https://git-scm.com/downloads)
 
-Steps to run the example
-------------------------
+Steps to run the example through Eclipse
+----------------------------------------
 1. Git clone this Repository  
 `git clone https://github.com/ibm-watson-iot/iot-platform-apiv2-samples`  
 
@@ -56,4 +57,4 @@ Steps to run the example
 
 4. Right click on the imported Maven Project `ibmiot-apiv2-samples` and build the project   
 
-5. Modify the properties file and run any of the source files  
+5. Modify the properties file, as per your organization, and run any of the source files  
