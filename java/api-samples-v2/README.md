@@ -34,8 +34,8 @@ To build and run the sample, you must have the following installed:
 * [Git](https://git-scm.com/downloads)
 ----
 
-### Build & Run the sample using Eclipse
-
+Build & Run the sample inside Eclipse
+=====================================
 You must have installed the [Eclipse Maven plugin](http://www.eclipse.org/m2e/), to import & run the samples in eclipse. Go to the next step, if you want to run manually.
 
 * Clone the iot-device-samples project using git clone as follows,
@@ -52,7 +52,9 @@ You must have installed the [Eclipse Maven plugin](http://www.eclipse.org/m2e/),
 
 ----
 
-### Building the sample - Required if you want to run the samples outside of Eclipse
+Building the samples outside Eclipse
+====================================
+### Building the sample
 
 * Clone the device-samples project using git clone as follows,
 
@@ -70,7 +72,7 @@ This will download the Java Client library for Watson IoT Platform (Currently it
 
 ----
 
-### Running the SampleDeviceAPIOperations sample outside Eclipse
+### Running the `SampleDeviceAPIOperations` sample outside Eclipse
 
 * Navigate to **target/classes** directory and modify the **application.properties** file with your Watson IoT Platform Organization details like, Organization name, API-Key and Token.
 
